@@ -1,0 +1,45 @@
+name: Lint Helm Charts
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
+      with:
+        version: 'v3.7.1'  # Use the Helm version you need
+
+    - name: Get list of changed files
+      id: changed-files
+      run: |
+        echo "::set-output name=files::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})"
+
+    - name: Lint Helm charts
+      run: |
+        files=${{ steps.changed-files.outputs.files }}
+        linted=false
+
+        for file in $files; do
+          if [[ $file == *"Chart.yaml" || $file == *"values.yaml" || $file == *"templates/"* ]]; then
+            chart_dir=$(dirname "$file")
+            echo "Linting chart in $chart_dir"
+            helm lint "$chart_dir"
+            linted=true
+          fi
+        done
+
+        if [ "$linted" = false ]; then
+          echo "No Helm chart changes detected"
+        fi
