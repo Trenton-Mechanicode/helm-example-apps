@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "az-go-chart.fullname" . }}
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  tls:
+{{ toYaml .Values.ingress.tls | indent 4 }}
+  rules:
+{{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+{{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "az-go-chart.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}  # Access port from .Values directly
+{{- end }}
+{{- end }}
+{{- end }}

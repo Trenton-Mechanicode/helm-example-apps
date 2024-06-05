@@ -1,0 +1,60 @@
+replicaCount: 1
+
+image:
+  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/azinterview-go
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: "0.5"
+    memory: "512Mi"
+  requests:
+    cpu: "0.1"
+    memory: "128Mi"
+
+livenessProbe:
+  path: /healthz
+  port: 8080
+
+readinessProbe:
+  path: /healthz
+  port: 8080
+
+imagePullSecrets:
+  - name: regcred
+
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: app.gnomuslabs.com
+      paths:
+        - path: /az/go(/|$)(.*)
+          pathType: Prefix
+  tls:
+    - hosts:
+        - app.gnomuslabs.com
+      secretName: az-go-tls
+
+rbac:
+  create: true
+  name: pod-reader-go
+  namespace: mechanicode
+
+serviceAccount:
+  name: default
+
+autoscaling:
+  enabled: true  # Set to true if you want to enable autoscaling
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50  # Adjust as needed
+  # targetMemoryUtilizationPercentage: 50  # Uncomment if you want to scale based on memory utilization
