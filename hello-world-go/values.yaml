@@ -47,7 +47,6 @@ ingress:
 rbac:
   create: true
   name: pod-reader-go
-  namespace: mechanicode
 
 serviceAccount:
   name: default
