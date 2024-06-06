@@ -32,18 +32,11 @@ ingress:
   ingressClassName: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
   hosts:
-    - host: app.gnomuslabs.com
+    - host: app.go.gnomuslabs.com
       paths:
-        - path: /go
+        - path: /
           pathType: ImplementationSpecific
-          backend:
-            service:
-              name: hello-world-go
-              port:
-                number: 80
   tls:
     - hosts:
         - app.gnomuslabs.com
