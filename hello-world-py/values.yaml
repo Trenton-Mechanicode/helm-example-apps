@@ -8,14 +8,6 @@ service:
   type: ClusterIP
   port: 80
 
-resources:
-  limits:
-    cpu: "0.5"
-    memory: "512Mi"
-  requests:
-    cpu: "0.5"
-    memory: "512Mi"
-
 livenessProbe:
   path: /healthz
   port: 8080

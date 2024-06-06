@@ -37,7 +37,6 @@ ingress:
     - host: app.gnomuslabs.com
       paths:
         - path: /go/hello(/|$)(.*)
-          pathType: ImplementationSpecific
   tls:
     - hosts:
         - app.gnomuslabs.com
