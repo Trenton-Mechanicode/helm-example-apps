@@ -36,7 +36,7 @@ ingress:
     - host: app.go.gnomuslabs.com
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls:
     - hosts:
         - app.go.gnomuslabs.com
