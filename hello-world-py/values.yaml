@@ -46,7 +46,7 @@ ingress:
                 number: 80
   tls:
     - hosts:
-        - app.pythongnomuslabs.com
+        - app.python.gnomuslabs.com
       secretName: az-go-tls
 
 rbac:
