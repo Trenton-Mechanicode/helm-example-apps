@@ -51,7 +51,7 @@ ingress:
 
 rbac:
   create: true
-  name: pod-reader-go
+  name: pod-reader-py
 
 serviceAccount:
   name: default
