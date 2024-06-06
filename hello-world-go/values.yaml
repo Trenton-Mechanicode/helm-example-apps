@@ -39,7 +39,7 @@ ingress:
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - app.gnomuslabs.com
+        - app.go.gnomuslabs.com
       secretName: az-go-tls
 
 rbac:
