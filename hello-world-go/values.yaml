@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 10
 
 image:
   repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go
