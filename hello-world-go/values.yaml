@@ -39,6 +39,11 @@ ingress:
       paths:
         - path: /go
           pathType: ImplementationSpecific
+          backend:
+            service:
+              name: hello-world-go
+              port:
+                number: 80
   tls:
     - hosts:
         - app.gnomuslabs.com

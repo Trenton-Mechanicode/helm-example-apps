@@ -39,6 +39,11 @@ ingress:
       paths:
         - path: /python
           pathType: ImplementationSpecific
+          backend:
+            service:
+              name: hello-world-py
+              port:
+                number: 80
   tls:
     - hosts:
         - app.gnomuslabs.com
