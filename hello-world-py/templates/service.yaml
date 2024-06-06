@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "az-go-chart.fullname" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.livenessProbe.port }}
+    protocol: TCP
+  selector:
+    app: {{ include "az-go-chart.name" . }}

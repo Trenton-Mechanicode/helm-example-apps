@@ -1,7 +1,7 @@
 replicaCount: 3
 
 image:
-  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go
+  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-py
   pullPolicy: Always
 
 service:
@@ -36,7 +36,7 @@ ingress:
   hosts:
     - host: app.gnomuslabs.com
       paths:
-        - path: /go/hello(/|$)(.*)
+        - path: /python/hello(/|$)(.*)
           pathType: ImplementationSpecific
   tls:
     - hosts:
