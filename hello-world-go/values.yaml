@@ -33,13 +33,13 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: henlo.gnomuslabs.com
+    - host: app.gnomuslabs.com
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - henlo.gnomuslabs.com
+        - app.gnomuslabs.com
       secretName: az-go-tls
 
 rbac:
