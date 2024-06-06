@@ -37,7 +37,7 @@ ingress:
   hosts:
     - host: app.gnomuslabs.com
       paths:
-        - path: /python/hello(/|$)(.*)
+        - path: /python
           pathType: ImplementationSpecific
   tls:
     - hosts:
