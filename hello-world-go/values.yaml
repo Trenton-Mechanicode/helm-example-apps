@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go
+  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go:v1.0.0
   pullPolicy: Always
 
 service:
