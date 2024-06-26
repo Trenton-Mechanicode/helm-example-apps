@@ -33,13 +33,13 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
-    - host: app.gnomuslabs.com
+    - host: app.blitzbaud.com
       paths:
         - path: /
           pathType: Prefix
   tls:
     - hosts:
-        - app.gnomuslabs.com
+        - app.blitzbaud.com
       secretName: az-go-tls
 
 rbac:
