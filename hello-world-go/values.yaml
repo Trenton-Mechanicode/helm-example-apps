@@ -1,8 +1,10 @@
 replicaCount: 1
 
 image:
-  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go:latest
+  repository: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/hello-world-go@sha256:53d5f35230711fcda638ee0b1e46f177f17054da3d4873db088887b33ca14f21
   pullPolicy: Always
+
+nodeName: dalek
 
 service:
   type: ClusterIP
@@ -36,7 +38,7 @@ ingress:
     - host: app.blitzbaud.com
       paths:
         - path: /hello/go
-          pathType: Prefix
+          pathType: ImplementationSpecific
   tls:
     - hosts:
         - app.blitzbaud.com

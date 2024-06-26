@@ -15,6 +15,7 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1337
+      nodeName: dalek
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}"
