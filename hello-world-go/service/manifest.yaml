@@ -17,7 +17,7 @@ spec:
         runAsUser: 1337     # Set the user ID to mechanicode's UID
       containers:
       - name: az-go-container
-        image: us-east4-docker.pkg.dev/cloudarchitect-408513/hello-world/azinterview-go
+        image: us-east4-docker.pkg.dev/cloudarchitect-408513/blitzbaud/www:arm7
         ports:
         - containerPort: 8080
         resources:  # Define resource limits and requests
