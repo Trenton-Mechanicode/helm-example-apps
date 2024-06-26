@@ -35,7 +35,7 @@ ingress:
   hosts:
     - host: app.blitzbaud.com
       paths:
-        - path: /
+        - path: /hello/go
           pathType: Prefix
   tls:
     - hosts:
