@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+  <style>
+    body {
+      background-color: white;
+      text-align: center;
+      padding: 50px;
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    button {
+      background-color: #0075a8;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .logo-container {
+      perspective: 1000px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .logo-flip {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+
+    .logo-front, .logo-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background-size: cover; /* Stretch the image to cover the container */
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .logo-front {
+      background-image: url("../static/img/logo.png");
+      background-size: contain; 
+      background-position: center;
+    }
+
+    .logo-back {
+      background-image: url("../static/img/logo3.jpg");
+      background-size: contain;
+      background-position: center;
+      transform: rotateY(180deg);
+    }
+
+    .rotate {
+      transform: rotateY(180deg);
+    }
+
+    .logo-container:hover {
+      transform: scale(1.1);
+    }
+
+    #hello-text {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 2s infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+  <div class="logo-container" onclick="toggleLogo(this)">
+    <div class="logo-flip">
+      <div class="logo-front"></div>
+      <div class="logo-back"></div>
+    </div>
+  </div>
+
+  <h1 id="hello-text">Hello World!<i class="fa-brands fa-golang"></i></h1>
+  <h3>My hostname is {{ .Hostname }}</h3>
+
+  {{ if .AppIP }}
+    <h3>Pod url:</h3> {{ .AppIP }}
+    <h3>Service url:</h3> {{ .SvcIP }}
+    <br/><br/><br/>
+  {{ end }}
+  
+  <h3>{{ .UserMessage }}</h3>
+
+  <button class="button" onclick="toggleHeaderDetails()">Show request details</button>
+  <div id="reqDetails" style="display:none">
+      <h3>Request Headers</h3>
+      <ul>
+          {{ range $key, $value := .Headers }}
+              <li><b>{{ $key }}:</b> {{ $value }}</li>
+          {{ end }}
+      </ul>
+  </div>
+  </br>
+
+  <button class="button" onclick="toggleContainerDetails()">
+    <i class="fab fa-github"></i>
+    <i class="fab fa-kubernetes"></i>
+    Container Details
+  </button>
+  <div id="containerDetails" style="display:none">
+      <h3>Container info</h3>
+      <p id="containerInfo">{{ .PodLabels.app }}</p>
+  </div>
+  <br/>
+  
+  <script>
+      function toggleHeaderDetails() {
+          var x = document.getElementById("reqDetails");
+          x.style.display = (x.style.display === "none") ? "block" : "none";
+      }
+   
+      function toggleContainerDetails() {
+          var x = document.getElementById("containerDetails");
+          if (x.style.display === "none") {
+              x.style.display = "block";
+              fetch("/container-info")
+                  .then(response => response.text())
+                  .then(data => {
+                      document.getElementById("containerInfo").innerText = data;
+                  })
+                  .catch(error => {
+                      console.error('Error fetching container info:', error);
+                  });
+          } else {
+              x.style.display = "none";
+          }
+      }
+  
+      function toggleLogo(container) {
+          var logoFlip = container.querySelector('.logo-flip');
+          logoFlip.classList.toggle('rotate');
+
+          // Update the text when the image is flipped
+          var helloText = document.getElementById("hello-text");
+          if (logoFlip.classList.contains('rotate')) {
+            helloText.textContent = "what's up- this is v1.1.0";
+            helloText.style.color = "transparent";
+          } else {
+            helloText.textContent = "Hello World!";
+            helloText.style.color = "";
+          }
+      }
+
+  </script>
+  <div id='links' class="row social">
+    <a class="p-a-xs" href="https://github.com/mechanicode-io/kubernetes"><img src="/static/img/icon-github.svg" alt="github" height="25" width="25"></a>
+</div>
+<br/>
+  <br/>
+</body>
+</html>
